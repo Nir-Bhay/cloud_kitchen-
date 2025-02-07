@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff6347, #ff4500);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Alert Message Styles */
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336; /* Default red for error */
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    text-align: center;
+    width: 300px;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.alert.success {
+    background-color: #4CAF50; /* Green for success */
+}
+
+.hidden {
+    display: none;
+}
+
+.alert.show {
+    opacity: 1;
+    display: block;
+}
+
+/* Signup Form Container */
+#loginForm {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Form Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    background: #f4f4f4;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    background: #fff;
+    border: 2px solid #ff6347;
+    outline: none;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #ff6347;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: #ff4500;
+    transform: scale(1.05);
+}
+
+/* Login Button */
+button a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+
+/* Hover Effect for Login Button */
+button:nth-child(2):hover {
+    background: #333;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 400px) {
+    #loginForm {
+        width: 90%;
+        padding: 30px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+<div id="alertMessage" class="alert hidden">
+    <p id="alertText"></p>
+</div>
+
+
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <button> <a href="signup.html">Sign up</a></button>
+    </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            let res = await fetch("http://192.168.82.60:5000/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            let data;
+            try {
+                data = await res.json();
+            } catch (error) {
+                console.error("Error parsing JSON response:", error);
+                showAlert("Error processing the response from the server.", "error");
+                return;
+            }
+
+            if (res.ok) {
+                localStorage.setItem("token", data.token);
+                window.location.href = data.role === "admin" ? "admin-dashboard.html" : "user-dashboard.html";
+            } else {
+                showAlert(data.message, "error");
+            }
+        });
+
+        // Function to show the custom alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById("alertMessage");
+            const alertText = document.getElementById("alertText");
+
+            // Set the message text and class based on success/error type
+            alertText.innerText = message;
+            alertContainer.classList.remove("success", "error");
+            alertContainer.classList.add(type);
+
+            // Show the alert and hide it after 3 seconds
+            alertContainer.classList.add("show");
+            setTimeout(() => {
+                alertContainer.classList.remove("show");
+            }, 3000); // The alert will disappear after 3 seconds
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #ff6347;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+        }
+
+        .lang-switch {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .lang-switch button {
+            background-color: #ff6347;
+            color: white;
+            padding: 5px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background-color: #ff6347;
+            color: white;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #ff4500;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .meal-menu,
+        .customer-status,
+        .payment,
+        .notifications {
+            margin-bottom: 40px;
+        }
+
+        .menu-item,
+        .customer-status-box,
+        .payment-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .customer-status-box,
+        .payment-box {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .status-box,
+        .payment-option {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 30%;
+        }
+
+        .status-box.active {
+            background-color: #4CAF50;
+        }
+
+        .status-box.meal-off {
+            background-color: #f39c12;
+        }
+
+        .status-box.tna {
+            background-color: #e67e22;
+        }
+
+        .status-box.exhausted {
+            background-color: #f44336;
+        }
+
+        .status-box.discontinued {
+            background-color: #7f8c8d;
+        }
+
+        .payment-option button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-option button:hover {
+            background-color: #ff4500;
+        }
+
+        /* Notifications */
+        .notifications ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notifications ul li {
+            background-color: #ff6347;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+            }
+
+            .menu-item,
+            .status-box,
+            .payment-option {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .customer-status-box,
+            .payment-box {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>User Dashboard</h2>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Meal Menu</a></li>
+                <li><a href="#">Orders</a></li>
+                <li><a href="#">Payments</a></li>
+                <li><a href="#">Notifications</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="javascript:void(0);" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header>
+            <h1>Welcome, <span id="adminName"></span>!</h1>
+            <p id="adminEmail"></p>
+            <div class="lang-switch">
+                <button>English</button>
+                <button>Hindi</button>
+            </div>
+        </header>
+
+        <!-- Meal Menu Section -->
+        <div class="meal-menu">
+            <h2>Available Meal Menus</h2>
+            <div class="menu-item">
+                <img src="meal1.jpg" alt="Meal 1">
+                <h3>Meal 1</h3>
+                <p>Delicious and healthy meal</p>
+                <button>Order Now</button>
+            </div>
+            <div class="menu-item">
+                <img src="meal2.jpg" alt="Meal 2">
+                <h3>Meal 2</h3>
+                <p>Fresh and nutritious meal</p>
+                <button>Order Now</button>
+            </div>
+            <div class="menu-item">
+                <img src="meal3.jpg" alt="Meal 3">
+                <h3>Meal 3</h3>
+                <p>Perfect for a balanced diet</p>
+                <button>Order Now</button>
+            </div>
+        </div>
+
+        <!-- Customer Status Section -->
+        <div class="customer-status">
+            <h2>Customer Status</h2>
+            <div class="customer-status-box">
+                <div class="status-box active">
+                    <h3>Active</h3>
+                    <p>Customers with ongoing service</p>
+                </div>
+                <div class="status-box meal-off">
+                    <h3>Meal Off</h3>
+                    <p>Temporary meal off (<3 Days)</p>
+                </div>
+                <div class="status-box tna">
+                    <h3>TNA</h3>
+                    <p>Long-term non-active customers (>3 Days)</p>
+                </div>
+                <div class="status-box exhausted">
+                    <h3>Exhausted</h3>
+                    <p>No meal balance left</p>
+                </div>
+                <div class="status-box discontinued">
+                    <h3>Discontinued</h3>
+                    <p>Permanently stopped customers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="payment">
+            <h2>Payment Options</h2>
+            <div class="payment-box">
+                <div class="payment-option">
+                    <h3>Online Payment</h3>
+                    <button>Pay Now</button>
+                </div>
+                <div class="payment-option">
+                    <h3>Cash Payment</h3>
+                    <button>Pay Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Section -->
+        <div class="notifications">
+            <h2>Notifications</h2>
+            <ul>
+                <li>Meal balance low, recharge reminder.</li>
+                <li>Payment confirmed, meal balance updated.</li>
+                <li>Your subscription is about to expire.</li>
+            </ul>
+        </div>
+    </div>
+
+   
+    <script>
+        // Get the token from localStorage
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "login.html"; // If token is not found, redirect to login
+        }
+
+        // Decode the token to get the admin details (using JWT decode or any library)
+        const decoded = JSON.parse(atob(token.split('.')[1])); // Decode JWT token manually (for simplicity)
+        document.getElementById("adminName").innerText = decoded.name; // Admin's name
+        document.getElementById("adminEmail").innerText = decoded.email; // Admin's email
+
+        function logout() {
+            localStorage.removeItem("token"); // Remove token on logout
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
+</body>
+
+</html>

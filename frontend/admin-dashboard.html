@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Customer Management</a></li>
+                <li><a href="#">Meal Menu</a></li>
+                <li><a href="#">Orders & Payments</a></li>
+                <li><a href="#">Notifications</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="login.html" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1>Welcome, <span id="adminName"></span></h1>
+            <p>Email: <span id="adminEmail"></span></p>
+        </header>
+    
+        <!-- Customer Overview Section -->
+        <section class="customer-overview">
+            <h2>Customer Overview</h2>
+            <div class="customer-stats">
+                <div class="stat-box active">
+                    <h3>Active Customers</h3>
+                    <p>150</p>
+                </div>
+                <div class="stat-box meal-off">
+                    <h3>Meal Off (<3 Days)</h3>
+                            <p>20</p>
+                </div>
+                <div class="stat-box tna">
+                    <h3>TNA (>3 Days)</h3>
+                    <p>10</p>
+                </div>
+                <div class="stat-box exhausted">
+                    <h3>Balance Exhausted</h3>
+                    <p>5</p>
+                </div>
+                <div class="stat-box discontinued">
+                    <h3>Discontinued</h3>
+                    <p>8</p>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Meal Menu & Offers -->
+        <section class="meal-menu">
+            <h2>Meal Menu & Offers</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="meal1.jpg" alt="Meal 1">
+                    <h3>Special Meal 1</h3>
+                    <p>Details of the meal.</p>
+                    <button>Edit</button>
+                </div>
+                <div class="menu-item">
+                    <img src="meal2.jpg" alt="Meal 2">
+                    <h3>Special Meal 2</h3>
+                    <p>Details of the meal.</p>
+                    <button>Edit</button>
+                </div>
+                <div class="menu-item">
+                    <img src="meal3.jpg" alt="Meal 3">
+                    <h3>Special Meal 3</h3>
+                    <p>Details of the meal.</p>
+                    <button>Edit</button>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Payments Section -->
+        <section class="payments">
+            <h2>Customer Payments</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Status</th>
+                        <th>Meal Balance</th>
+                        <th>Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Active</td>
+                        <td>50</td>
+                        <td>Paid</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>Balance Exhausted</td>
+                        <td>0</td>
+                        <td>Pending</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    
+        <!-- Admin Settings Section -->
+        <section class="admin-settings">
+            <h2>Business Settings</h2>
+            <form>
+                <label for="businessName">Business Name</label>
+                <input type="text" id="businessName" placeholder="Business Name">
+    
+                <label for="menuRate">Menu Rate</label>
+                <input type="text" id="menuRate" placeholder="Rate per Meal">
+    
+                <label for="terms">Terms and Conditions</label>
+                <textarea id="terms" placeholder="Enter terms and conditions"></textarea>
+    
+                <button type="submit">Save Settings</button>
+            </form>
+        </section>
+    </div>
+    <!-- <button onclick="logout()">Logout</button> -->
+
+    <script>
+        // Get the token from localStorage
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "login.html"; // If token is not found, redirect to login
+        }
+
+        // Decode the token to get the user details (using JWT decode or any library)
+        const decoded = JSON.parse(atob(token.split('.')[1])); // Decode JWT token manually (for simplicity)
+
+        // If user is not an admin, redirect to user dashboard
+        if (decoded.role !== "admin") {
+            window.location.href = "user-dashboard.html";
+        }
+
+        function logout() {
+            localStorage.removeItem("token"); // Remove token on logout
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
+</body>
+
+</html>
