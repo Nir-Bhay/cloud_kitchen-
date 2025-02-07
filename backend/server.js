@@ -98,7 +98,7 @@ app.post("/auth/login", async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
-
+module.exports = app;
 // Start Server
 const PORT = 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
