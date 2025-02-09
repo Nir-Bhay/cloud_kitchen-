@@ -151,7 +151,7 @@ button:nth-child(2):hover {
             let email = document.getElementById("email").value;
             let password = document.getElementById("password").value;
 
-            let res = await fetch("http://192.168.82.60:5000/auth/login", {
+            let res = await fetch("http://192.168.207.60:5000/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })

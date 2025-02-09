@@ -9,7 +9,7 @@ app.use(express.json()); // Parse JSON body
 
 // CORS Configuration
 const corsOptions = {
-    origin: ["http://192.168.82.60:5500", "http://localhost:5500"], // Allow frontend access
+    origin: ["http://192.168.207.60:5500", "http://localhost:5500"], // Allow frontend access
     methods: "GET,POST,PUT,DELETE",
     credentials: true
 };
@@ -98,7 +98,8 @@ app.post("/auth/login", async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
-module.exports = app;
+
+
 // Start Server
 const PORT = 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
