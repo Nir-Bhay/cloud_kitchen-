@@ -10,5 +10,4 @@ services:
         sync: false  # Set this manually in Render Dashboard
       - key: JWT_SECRET
         sync: false  # Set this manually in Render Dashboard
-      - key: PORT
-        value: 5000  # Render auto-assigns a port, remove this if needed
+        # Render auto-assigns a port, remove this if needed
