@@ -206,12 +206,13 @@
             const password = document.getElementById("password").value;
 
             try {
-                const response = await fetch("https://my-backend-cedd.onrender.com", {  // Use your machine's IP
+              const response = await fetch("https://my-backend-cedd.onrender.com/signup", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ name, email, password })
+                    body: JSON.stringify({ name, email, password }),
+                    credentials: "include" // Needed if backend allows credentials
                 });
 
                 const data = await response.json();

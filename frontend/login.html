@@ -196,10 +196,11 @@
             let email = document.getElementById("email").value;
             let password = document.getElementById("password").value;
 
-            let res = await fetch("https://my-backend-cedd.onrender.com", {
+            let res = await fetch("https://my-backend-cedd.onrender.com/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
+                 credentials: "include"
             });
 
             let data;
