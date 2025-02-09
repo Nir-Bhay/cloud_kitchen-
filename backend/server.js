@@ -9,7 +9,7 @@ app.use(express.json()); // Parse JSON body
 
 // CORS Configuration
 const corsOptions = {
-    origin: ["http://192.168.207.60:5500", "http://localhost:5500"], // Allow frontend access
+    origin: ["https://nir-bhay.github.io/cloud_kitchen-/frontend/signup.html", "http://localhost:5500"], // Allow frontend access
     methods: "GET,POST,PUT,DELETE",
     credentials: true
 };
