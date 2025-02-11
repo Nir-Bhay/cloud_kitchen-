@@ -9,12 +9,11 @@ app.use(express.json()); // Parse JSON body
 
 // CORS Configuration
 const corsOptions = {
-    origin: ["https://nir-bhay.github.io"], // GitHub Pages root URL
+    origin: ["http://192.168.207.60:5500", "http://localhost:5500"], // Allow frontend access
     methods: "GET,POST,PUT,DELETE",
     credentials: true
 };
 app.use(cors(corsOptions));
-
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
