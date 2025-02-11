@@ -76,41 +76,6 @@
         button:nth-child(2):hover {
             background: #333;
         }
-#signupForm a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-}
-        /* Buttons */
-        .button {
-            width: 94%;
-            padding: 12px;
-            margin-top: 25px;
-            background: #ff6347;
-            color: white;
-            font-size: 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .button:hover {
-            background: #ff4500;
-            transform: scale(1.05);
-        }
-
-        /* Login Button */
-        .button a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-        }
-
-        /* Hover Effect for Login Button */
-        .button:nth-child(2):hover {
-            background: #333;
-        }
 
         /* Animations */
         @keyframes fadeIn {
@@ -186,11 +151,7 @@
         <input type="email" id="email" placeholder="Email" required />
         <input type="password" id="password" placeholder="Password" required />
         <button type="submit">Sign Up</button>
-        <a href="login.html">
-            <div class="button">
-               Login
-            </div>
-        </a>
+        <button> <a href="login.html">Login</a></button>
     </form>
     <!-- Alert Container -->
     <div id="alertMessage" class="alert hidden">
@@ -206,13 +167,12 @@
             const password = document.getElementById("password").value;
 
             try {
-              const response = await fetch("https://my-backend-cedd.onrender.com/signup", {
+                const response = await fetch("http://192.168.207.60:5000/signup", {  // Use your machine's IP
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ name, email, password }),
-                    credentials: "include" // Needed if backend allows credentials
+                    body: JSON.stringify({ name, email, password })
                 });
 
                 const data = await response.json();
